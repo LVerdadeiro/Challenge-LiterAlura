@@ -15,8 +15,10 @@ public class Livro {
 
     @Column(unique = true)
     private String titulo;
-    private String idioma;
+    @ElementCollection
+    private List<String> idioma;
     private Integer numeroDownloads;
+    @Column(columnDefinition = "TEXT")
     private String sinopse;
 
     @ManyToMany(mappedBy = "livros")
@@ -28,6 +30,66 @@ public class Livro {
         this.titulo = dadosLivro.titulo();
         this.idioma = dadosLivro.idiomas();
         this.numeroDownloads = dadosLivro.numeroDownloads();
-        this.sinopse = dadosLivro.sinopse();
+        this.sinopse = String.join("\n", dadosLivro.sinopse());
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public List<String> getIdioma() {
+        return idioma;
+    }
+
+    public void setIdioma(List<String> idioma) {
+        this.idioma = idioma;
+    }
+
+    public Integer getNumeroDownloads() {
+        return numeroDownloads;
+    }
+
+    public void setNumeroDownloads(Integer numeroDownloads) {
+        this.numeroDownloads = numeroDownloads;
+    }
+
+    public String getSinopse() {
+        return sinopse;
+    }
+
+    public void setSinopse(String sinopse) {
+        this.sinopse = sinopse;
+    }
+
+    public List<Autor> getAutores() {
+        return autores;
+    }
+
+    public void setAutores(List<Autor> autores) {
+        this.autores = autores;
+    }
+
+    @Override
+    public String toString() {
+        return "Livro{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", idioma='" + idioma + '\'' +
+                ", numeroDownloads=" + numeroDownloads +
+                ", sinopse='" + sinopse + '\'' +
+                ", autores=" + autores +
+                '}';
     }
 }
